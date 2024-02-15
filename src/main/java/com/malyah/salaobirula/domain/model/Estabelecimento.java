@@ -1,31 +1,34 @@
 package com.malyah.salaobirula.domain.model;
 
-import java.time.LocalDate;
-
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.SuperBuilder;
+import lombok.NoArgsConstructor;
+
 
 @Data
-@MappedSuperclass
+@Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@SuperBuilder
-public abstract class Pessoa {
-	
-	@EqualsAndHashCode.Include
+@AllArgsConstructor
+@NoArgsConstructor
+public class Estabelecimento {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
 	private Long id;
 	private String nome;
-	private Sexo sexo;
+	private String cnpj;
+	private String endereco;
 	private String telefone;
 	private String email;
-	private LocalDate dataNascimento;
-	private String observacao;
-
-
+	private TipoEstabelecimento tipo;
+	private StatusEstabelecimento status;
+	private String imagem;
+	private String descricao;
+	private String horarioFuncionamento;
 }
