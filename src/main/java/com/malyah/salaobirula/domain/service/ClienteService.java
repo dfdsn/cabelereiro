@@ -40,7 +40,7 @@ public class ClienteService {
 		return clienteRepository.findByEmail(email).get();
 	}
 	
-	public Cliente buscarClientePorId(Long id) {
+	public Cliente buscarOuFalhar(Long id) {
 		return clienteRepository.findById(id).orElseThrow( () -> new ClienteNaoEncontradoException(id));
 	}
 	

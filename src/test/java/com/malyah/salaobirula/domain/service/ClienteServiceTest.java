@@ -65,14 +65,14 @@ class ClienteServiceTest {
 	@Test
 	void buscarClientePorId_retornaCliente() {
 		when(clienteRepository.findById(1L)).thenReturn(Optional.of(CLIENTE_GIULIA));
-		assertThat(clienteService.buscarClientePorId(1L)).isEqualTo(CLIENTE_GIULIA);
+		assertThat(clienteService.buscarOuFalhar(1L)).isEqualTo(CLIENTE_GIULIA);
 	}
 
 	@Test
 	void buscarClientePorIdInexistente_retornaVazio() {
 		when(clienteRepository.findById(1L)).thenReturn(Optional.empty());
 		assertThatThrownBy(() -> {
-			clienteService.buscarClientePorId(1L);
+			clienteService.buscarOuFalhar(1L);
 		}).isInstanceOf(RuntimeException.class);
 	}
 

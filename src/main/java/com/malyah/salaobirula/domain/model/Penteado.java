@@ -11,13 +11,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Data
 @Entity
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-public class Produto {
-	
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Penteado {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
@@ -25,9 +25,8 @@ public class Produto {
 	private String nome;
 	private String descricao;
 	private BigDecimal preco;
-	private Boolean ativo;
-	private Boolean disponivel;
-	private String imagem;
-	private String codigo;
-
+	private String foto;
+	private String duracao;
+	
+	
 }

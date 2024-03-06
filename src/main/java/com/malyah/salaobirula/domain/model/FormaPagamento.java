@@ -1,7 +1,5 @@
 package com.malyah.salaobirula.domain.model;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,12 +9,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Data
 @Entity
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Produto {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class FormaPagamento {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +22,18 @@ public class Produto {
 	private Long id;
 	private String nome;
 	private String descricao;
-	private BigDecimal preco;
 	private Boolean ativo;
-	private Boolean disponivel;
-	private String imagem;
-	private String codigo;
+	
+	public void ativar() {
+		if (!ativo) {
+			setAtivo(true);
+		}
+	}
+	
+	public void desativar() {
+		if (ativo) {
+			setAtivo(false);
+		}
+	}
 
 }
