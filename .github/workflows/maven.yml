@@ -13,9 +13,9 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: nome_do_seu_banco
-          POSTGRES_USER: seu_usuario
-          POSTGRES_PASSWORD: sua_senha
+          POSTGRES_DB: ERP
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 072513
         ports:
           - 5432:5432
         options: >-
