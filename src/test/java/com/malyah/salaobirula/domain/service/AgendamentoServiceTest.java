@@ -1,11 +1,14 @@
 package com.malyah.salaobirula.domain.service;
 
 import static com.malyah.salaobirula.domain.constants.AgendamentoConstant.AGENDAMENTO;
+import static com.malyah.salaobirula.domain.constants.FuncionarioConstant.FUNCIONARIO;
 import static com.malyah.salaobirula.domain.constants.AgendamentoConstant.AGENDAMENTOS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,9 +18,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.malyah.salaobirula.domain.exception.FormaPagamentoNaoEncontradoException;
 import com.malyah.salaobirula.domain.model.Agendamento;
+import com.malyah.salaobirula.domain.model.Cliente;
+import com.malyah.salaobirula.domain.model.Funcionario;
+import com.malyah.salaobirula.domain.model.Servico;
+import com.malyah.salaobirula.domain.model.StatusAgendamento;
 import com.malyah.salaobirula.domain.repository.AgendamentoRepository;
+import static com.malyah.salaobirula.domain.ClienteConstant.CLIENTE_GIULIA;
+import static com.malyah.salaobirula.domain.constants.ServicoConstant.SERVICO;
+
 
 @ExtendWith(MockitoExtension.class)
 public class AgendamentoServiceTest {
@@ -27,6 +36,15 @@ public class AgendamentoServiceTest {
 	
 	@Mock
 	private AgendamentoRepository agendamentoRepository;
+	
+	@Mock
+	private ClienteService clienteService;
+	
+	@Mock
+	private FuncionarioService funcionarioService;
+	
+	@Mock
+	private ServicoService servicoService;
 	
 	@Test
 	public void listarAgendamentos_retornaListaDeAgendamentos() {
@@ -40,20 +58,35 @@ public class AgendamentoServiceTest {
 		assertThat(agendamentos.get(0)).isEqualTo(AGENDAMENTO);
 	}
 	
-//	@Test
-//	public void salvarAgendamento_retornaAgendamento() {
-//		when(agendamentoRepository.save(AGENDAMENTO)).thenReturn(AGENDAMENTO);
-//
-//		Agendamento sut = agendamentoService.salvar(AGENDAMENTO);
-//
-//		assertThat(sut).isNotNull();
-//		assertThat(sut.getId()).isNotNull();
-//		assertThat(sut.getCliente()).isEqualTo(AGENDAMENTO.getCliente());
-//		assertThat(sut.getServico()).isEqualTo(AGENDAMENTO.getServico());
-//		assertThat(sut.getData()).isEqualTo(AGENDAMENTO.getData());
-//		assertThat(sut.getHorarioInicio()).isEqualTo(AGENDAMENTO.getHorarioInicio());
-//		assertThat(sut.getValor()).isEqualTo(AGENDAMENTO.getValor());
-//	}
+	@Test
+	public void salvarAgendamento_retornaAgendamento() {
+		
+		 // Arrange
+
+        Agendamento agendamento = new Agendamento();
+        agendamento.setCliente(CLIENTE_GIULIA);
+        agendamento.setFuncionario(FUNCIONARIO);
+        agendamento.setServico(SERVICO);
+        agendamento.setHorarioInicio(LocalDateTime.now());
+        agendamento.setStatus(StatusAgendamento.AGENDADO);
+
+        when(clienteService.buscarOuFalhar(1L)).thenReturn(CLIENTE_GIULIA);
+        when(funcionarioService.buscarOuFalhar(1L)).thenReturn(FUNCIONARIO);
+        when(servicoService.buscarOuFalhar(1L)).thenReturn(SERVICO);
+        when(agendamentoRepository.save(any(Agendamento.class))).thenReturn(agendamento);
+
+        // Act
+        Agendamento agendamentoSalvo = agendamentoService.salvar(agendamento);
+
+        // Assert
+        assertThat(agendamentoSalvo).isNotNull();
+        assertThat(agendamentoSalvo.getCliente()).isEqualTo(CLIENTE_GIULIA);
+        assertThat(agendamentoSalvo.getFuncionario()).isEqualTo(FUNCIONARIO);
+        assertThat(agendamentoSalvo.getServico()).isEqualTo(SERVICO);
+        assertThat(agendamentoSalvo.getStatus()).isEqualTo(StatusAgendamento.AGENDADO);
+		
+	
+	}
 	
 	@Test
 	public void buscarAgendamento_retorneAgendamento() {

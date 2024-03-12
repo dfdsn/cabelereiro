@@ -48,8 +48,10 @@ public class AgendamentoService {
 //        TODO:CONFIGURAR UM ENDPOINT PARA O STATUS DO AGENDAMENTO
 		agenda.setStatus(StatusAgendamento.AGENDADO);
 		
+        String elev;
+        int numero = 10;
+        elev = Integer.toString(numero);
         
-		
 		return agendamentoRepository.save(agenda);
 	}
 	
